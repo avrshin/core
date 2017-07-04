@@ -13,9 +13,19 @@ class AccountsTreeStore {
 }
 Class.register(AccountsTreeStore);
 
+
+let _instance = null;
+
 class PersistentAccountsTreeStore extends ObjectDB {
+
     constructor() {
-        super('accounts', AccountsTreeNode);
+        if (_instance) {
+            Log.d('Return saved instance');
+            return _instance;
+        }
+        _instance = super('accounts', AccountsTreeNode);
+        Log.d('save and return new instance');
+        return _instance;
     }
 
     async getRootKey() {
